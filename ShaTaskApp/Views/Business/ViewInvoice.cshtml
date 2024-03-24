@@ -1,0 +1,148 @@
+﻿@using Microsoft.AspNetCore.Authentication;
+@using ShaTaskApp.Models.Entities
+@model ShaTaskApp.Models.Entities.Invoice
+
+@{
+    ViewBag.Title = "View Invoice";
+    
+}
+
+
+<section class="ftco-section">
+    <div class="container bg-infdo w-50">
+
+        <div class="row justify-content-center ">
+            <div class="col-md-12 col-lg-10">
+
+                <div class="login-wrap p-4 p-md-5 ">
+                    <div class="d-flex ">
+                        <div class="w-100">
+                            <h3 class="mb-4">Invoice Details</h3>
+                        </div>
+
+                    </div>
+                    <form method="post" class="signin-form">
+
+           
+
+
+
+
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Id">Inovice Id</label>
+                            <input type="text" disabled class="form-control" asp-for="Id" value="@Model.Id">
+                        </div>
+
+                          <div class="form-group mb-3">
+                            <label class="label" asp-for="InvoiceNumber">Invoice Number</label>
+                            <input type="text" disabled class="form-control" asp-for="InvoiceNumber" value="@Model.InvoiceNumber">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Date">Inovice Creation Date</label>
+                            <input type="text" disabled class="form-control" asp-for="Id" value="@Model.Date">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="TaxRate">Tax Rate</label>
+                            <input type="text" disabled class="form-control" asp-for="TaxRate" value="@Model.TaxRate">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="TaxAmount">Tax Amount</label>
+                            <input type="text" disabled class="form-control" asp-for="TaxAmount" value="@Model.TaxAmount">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Discount">Discount</label>
+                            <input type="text" disabled class="form-control" asp-for="Discount" value="@Model.Discount">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="TotalAmount">Total Amount</label>
+                            <input type="text" disabled class="form-control" asp-for="TotalAmount" value="@Model.TotalAmount">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="@Model.Customer.Name">Customer Name</label>
+                            <input type="text" disabled class="form-control" asp-for="@Model.Customer.Name" value="@Model.Customer.Name">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="@Model.Customer.Address">Customer Address</label>
+                            <input type="text" disabled class="form-control" asp-for="@Model.Customer.Address" value="@Model.Customer.Address">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="@Model.Customer.Email">Customer Email</label>
+                            <input type="text" disabled class="form-control" asp-for="@Model.Customer.Email" value="@Model.Customer.Email">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="@Model.Customer.Phone">Customer Phone</label>
+                            <input type="text" disabled class="form-control" asp-for="@Model.Customer.Phone" value="@Model.Customer.Phone">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Notes">Notes</label>
+                            <input type="text" disabled class="form-control" asp-for="Notes" value="@Model.Notes">
+                        </div>
+                    
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Status">Status</label>
+                            <input type="text" disabled class="form-control" asp-for="Status" value="@(Model.Status ? "Active" : "Expired")">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" >Invoice Products</label>
+
+                   
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Category</th>
+                                        <th scope="col">Quantity</th>
+                                            <th scope="col">Actions</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach (var invoiceProduct in Model.InvoiceProducts.Select((item, index) => new { Item = item, Index = index + 1 })) // Add 1 for starting index at 1
+                                        {
+
+
+                                        <tr class="@(invoiceProduct.Item.ProductDeleted ? "disabled" : "")">
+                                                <th scope="row">
+                                                    @invoiceProduct.Index
+
+                                                </th>
+                                            <td>@invoiceProduct.Item.ProductName</td>
+                                            <td> @invoiceProduct.Item.ProductPrice</td>
+                                            <td> @invoiceProduct.Item.ProductCategory</td>
+                                            <td> @invoiceProduct.Item.Quantity</td>
+
+                                            <td >
+                                                    
+                                                <div class="d-flex  ">
+                                                    <a class="  text-decoration-none" asp-controller="Business" asp-action="ViewProduct" asp-route-id="@invoiceProduct.Item.ProductId">
+                                                            <i class="bi bi-binoculars-fill"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                 
+                                            </tr>
+
+                                        }
+
+
+                                    </tbody>
+                                </table>
+
+                            
+                        </div>
+
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+

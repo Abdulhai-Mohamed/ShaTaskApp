@@ -1,0 +1,157 @@
+﻿@using Microsoft.AspNetCore.Authentication;
+@using ShaTaskApp.Models.Entities
+@model ShaTaskApp.Models.Entities.Invoice
+
+@{
+    ViewBag.Title = "Update Invoice";
+ 
+}
+
+
+<section class="ftco-section">
+    <div class="container bg-infdo w-50">
+
+        <div class="row justify-content-center ">
+            <div class="col-md-12 col-lg-10">
+
+                <div class="login-wrap p-4 p-md-5 ">
+                    <div class="d-flex ">
+                        <div class="w-100">
+                            <h3 class="mb-4">Upadte Invoice Details</h3>
+                        </div>
+
+                    </div>
+                    <form method="post" class="signin-form">
+
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="TaxRate">Tax Rate</label>
+                            <input type="text" class="form-control" asp-for="TaxRate"  >
+                            <span class="validate-color" asp-validation-for="TaxRate"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="TaxAmount">Tax Amount</label>
+                            <input type="text" class="form-control" asp-for="TaxAmount"  >
+                            <span class="validate-color" asp-validation-for="TaxAmount"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Discount">Discount</label>
+                            <input type="text" class="form-control" asp-for="Discount"  >
+                            <span class="validate-color" asp-validation-for="Discount"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="@Model.Customer.Name">Customer Name</label>
+                            <input type="text" class="form-control" asp-for="@Model.Customer.Name"  >
+                            <span class="validate-color" asp-validation-for="@Model.Customer.Name"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="@Model.Customer.Address">Customer Address</label>
+                            <input type="text" class="form-control" asp-for="@Model.Customer.Address"  >
+                            <span class="validate-color" asp-validation-for="@Model.Customer.Address"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="@Model.Customer.Email">Customer Email</label>
+                            <input type="text" class="form-control" asp-for="@Model.Customer.Email"  >
+                            <span class="validate-color" asp-validation-for="@Model.Customer.Email"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="@Model.Customer.Phone">Customer Phone</label>
+                            <input type="text" class="form-control" asp-for="@Model.Customer.Phone"  >
+                            <span class="validate-color" asp-validation-for="@Model.Customer.Phone"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Notes">Notes</label>
+                            <input type="text" class="form-control" asp-for="Notes"  >
+                            <span class="validate-color" asp-validation-for="Notes"></span>
+                        </div>
+                        <div class="form-group d-md-flex">
+                            <div class="w-50 text-left">
+                                <label class="checkbox-wrap checkbox-primary mb-0" asp-for="Status">
+                                    Active
+                                    <input type="checkbox"  asp-for="Status">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="form-group mb-3">
+
+                          
+
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Actions</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var product in Model.InvoiceProducts.Select((item, index) => new { Item = item, Index = index + 1 })) // Add 1 for starting index at 1
+                                        {
+                                            /*we save all data of product*/
+                                            <input type="hidden" asp-for="@Model.InvoiceProducts[product.Index-1].ProductId" value="@product.Item.ProductId">
+                                            <input type="hidden" asp-for="@Model.InvoiceProducts[product.Index-1].ProductName" value="@product.Item.ProductName">
+                                            <input type="hidden" asp-for="@Model.InvoiceProducts[product.Index-1].ProductPrice" value="@product.Item.ProductPrice">
+                                            <input type="hidden" asp-for="@Model.InvoiceProducts[product.Index-1].ProductDescription" value="@product.Item.ProductDescription">
+                                            <input type="hidden" asp-for="@Model.InvoiceProducts[product.Index-1].ProductCategory" value="@product.Item.ProductCategory">
+                                        <input type="hidden" asp-for="@Model.InvoiceProducts[product.Index-1].ProductDeleted" value="@product.Item.ProductDeleted">
+
+
+                                        <tr class="@(product.Item.ProductDeleted ? "disabled" : "")">
+                                                <th scope="row">
+                                                    @product.Index
+
+                                                </th>
+                                                <td>@product.Item.ProductName</td>
+                                                <td> @product.Item.ProductPrice</td>
+                                                <td> @product.Item.ProductCategory</td>
+                                                <td>
+
+                                                    <div class="d-flex  ">
+                                                        <a class="  text-decoration-none" asp-controller="Business" asp-action="ViewProduct" asp-route-id="@product.Item.ProductId">
+                                                            <i class="bi bi-binoculars-fill"></i>
+
+                                                        </a>
+                                                        <div class="d-flex  ">
+                                                            <i class="text-secondary bi bi-plus-slash-minus mx-3 "></i>
+                                                            <input type="number" asp-for="@Model.InvoiceProducts[product.Index-1].Quantity" min="0" max="100">
+
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        }
+
+
+                                    </tbody>
+                                </table>
+
+                             
+                        </div>
+
+
+
+                        <div asp-validation-summary="All" class="validate-color"></div>
+
+                        <div class="form-group">
+                            <button type="submit" class="form-control btn btn-primary rounded submit px-3">Update</button>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+

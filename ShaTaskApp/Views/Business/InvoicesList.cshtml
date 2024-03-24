@@ -1,0 +1,136 @@
+﻿@using Microsoft.AspNetCore.Authentication;
+@using ShaTaskApp.Models.Entities
+@model IEnumerable<Invoice>;
+
+@{
+    ViewBag.Title = "Invoice List";
+}
+ 
+<h2>@ViewBag.Title</h2>
+<p class="mt-5">
+    <button type="button" asp-controller="Business" asp-action="CreateInvoice" class="btn btn-success">
+        <a class="text-white nav-link" asp-controller="Business" asp-action="CreateInvoice">Create new Invoice</a>
+        
+    </button>
+ </p>
+@if (Model.ToList().Count == 0)
+{
+    <h5>
+        No Invoices Created Yet! <a asp-controller="Business" asp-action="CreateInvoice"> Create One? </a>
+    </h5>
+}
+else{
+<Section>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                        <th scope="col">Invoice Number</th>
+                        <th scope="col">Creation Date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Tax Rate</th>
+                        <th scope="col">Tax Amount</th>
+                        <th scope="col">Discount</th>
+                        <th scope="col">Customer ID</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Customer Email</th>
+                        <th scope="col">Customer Address</th>
+                        <th scope="col">Customer Phone</th>
+                        <th scope="col">Notes</th>
+                    <th scope="col">Actions</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                    @foreach (var invoice in Model.Select((item, index) => new { Item = item, Index = index + 1 })) // Add 1 for starting index at 1
+                    {
+                         <tr>
+                            <th scope="row">@invoice.Index</th>
+                            <td>@invoice.Item.InvoiceNumber</td>
+                            <td>@invoice.Item.Date</td>
+                            <td> @(@invoice.Item.Status? "Active" : "Expired")</td>
+                            <td> @invoice.Item.TaxRate</td>
+                            <td> @invoice.Item.TaxAmount</td>
+                            <td> @invoice.Item.Discount</td>
+                            <td> @invoice.Item.Customer.Id</td>
+                            <td> @invoice.Item.Customer.Name</td>
+                            <td> @invoice.Item.Customer.Email</td>
+                            <td> @invoice.Item.Customer.Address</td>
+                            <td> @invoice.Item.Customer.Phone</td>
+                             <td> @invoice.Item.Notes</td>
+                            <td>
+
+                            <div class="d-flex justify-content-around">
+                                    <a class=".text-secondary text-decoration-none" asp-controller="Business" asp-action="ViewInvoice" asp-route-id="@invoice.Item.Id">
+                                <i class="bi bi-binoculars-fill"></i>
+
+                                </a>
+                                    <a class="px-3 .text-secondary text-decoration-none" asp-controller="Business" asp-action="UpdateInvoice" asp-route-id="@invoice.Item.Id">
+                                        <i class="bi bi-pencil-square"></i>
+
+                                    </a>
+
+                                    <Button class="border-0 delete-invoice" data-toggle="modal" data-target="#exampleModalCenter" data-id="@invoice.Item.Id">
+                                <i class="text-danger bi bi-trash3"></i>
+
+                                    </Button>
+                            </div>
+                            </td>
+                        </tr>
+              
+                     }
+
+          
+            </tbody>
+        </table>
+    </div>
+ 
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Delete Confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Do you really want delete this Invoice?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <form asp-controller="Business" asp-action="DeleteInvoice" method="post">
+                        <button type="submit" class=" btn btn-primary"    >Yeas</button>
+                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-invoice');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const Id = this.dataset.id; // Access data-id attribute using dataset property
+
+                    // Update modal confirmation message (optional)
+                    // const modalBody = document.getElementById('exampleModalCenter').querySelector('.modal-body');
+                    // modalBody.textContent = `Are you sure you want to delete cashier with ID: ${cashierId}`;
+
+                    // Update the "Yes" button's action URL with the ID (replace "???"):
+                    const form = document.getElementById('exampleModalCenter').querySelector('.modal-footer form');
+
+                    var newValue = '/Business/DeleteInvoice' + '/' + Id;
+
+                    form.setAttribute('action', newValue);
+                });
+            });
+        });
+    </script>
+}
+
+

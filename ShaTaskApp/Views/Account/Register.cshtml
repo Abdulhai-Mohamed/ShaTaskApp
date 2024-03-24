@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNetCore.Authentication;
+@model ShaTaskApp.Models.Account.RegisterModel
+
+@{
+    ViewBag.Title = "User Registration";
+}
+
+
+<section class="ftco-section">
+    <div class="container bg-infdo w-50">
+
+        <div class="row justify-content-center ">
+            <div class="col-md-12 col-lg-10">
+
+                <div class="login-wrap p-4 p-md-5 ">
+                    <div class="d-flex ">
+                        <div class="w-100">
+                            <h3 class="mb-4">Register</h3>
+                        </div>
+
+                    </div>
+                    <form method="post"   asp-controller="Account" asp-action="Register" class="signin-form">
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="UserName">User Name</label>
+                            <input type="text" class="form-control" asp-for="UserName" placeholder="User Name" required>
+                            <span class="validate-color" asp-validation-for="UserName"></span>
+
+                        </div>   <div class="form-group mb-3">
+                            <label class="label" asp-for="Email">Email</label>
+                            <input type="text" class="form-control" asp-for="Email" placeholder="Email" required>
+                            <span class="validate-color" asp-validation-for="Email"></span>
+
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Password">Password</label>
+                            <input type="password" class="form-control" asp-for="Password" placeholder="Password" required>
+                            <span class="validate-color" asp-validation-for="Password"></span>
+
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="ConfirmPassword">Confirm Password</label>
+                            <input type="password" class="form-control" asp-for="ConfirmPassword" placeholder="Confirm Password" required>
+                            <span class="validate-color" asp-validation-for="ConfirmPassword"></span>
+
+                        </div>
+                        <div asp-validation-summary="All" class="validate-color"></div>
+
+                        <div class="form-group">
+                            <button type="submit" class="form-control btn btn-primary rounded submit px-3">Create</button>
+                        </div>
+                       
+                    </form>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+

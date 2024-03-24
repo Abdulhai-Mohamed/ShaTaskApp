@@ -1,0 +1,120 @@
+﻿@using Microsoft.AspNetCore.Authentication;
+@using ShaTaskApp.Models.Entities
+@model IEnumerable<Product>;
+
+@{
+    ViewBag.Title = "Products List";
+}
+ 
+<h2>@ViewBag.Title</h2>
+<p class="mt-5">
+    <button type="button" asp-controller="Business" asp-action="CreateProduct" class="btn btn-success">
+        <a class="text-white nav-link" asp-controller="Business" asp-action="CreateProduct">Create new Product</a>
+        
+    </button>
+ </p>
+@if (Model.ToList().Count == 0)
+{
+    <h5>
+        No Products Created Yet! <a asp-controller="Business" asp-action="CreateProduct"> Create One? </a>
+    </h5>
+}
+else{
+<Section>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Category</th>
+                    <th scope="col">Actions</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                    @foreach (var product in Model.Select((item, index) => new { Item = item, Index = index + 1 })) // Add 1 for starting index at 1
+                    {
+                         <tr>
+                            <th scope="row">@product.Index</th>
+                            <td>@product.Item.Name</td>
+                            <td>@product.Item.Description</td>
+                            <td> @product.Item.Price</td>
+                            <td> @product.Item.Category</td>
+                            <td>
+
+                            <div class="d-flex justify-content-around">
+                                    <a class=".text-secondary text-decoration-none" asp-controller="Business" asp-action="ViewProduct" asp-route-id="@product.Item.Id">
+                                <i class="bi bi-binoculars-fill"></i>
+
+                                </a>
+                                    <a class=".text-secondary text-decoration-none" asp-controller="Business" asp-action="UpdateProduct" asp-route-id="@product.Item.Id">
+                                        <i class="bi bi-pencil-square"></i>
+
+                                    </a>
+
+                                    <Button class="border-0 delete-product" data-toggle="modal" data-target="#exampleModalCenter" data-id="@product.Item.Id">
+                                <i class="text-danger bi bi-trash3"></i>
+
+                                    </Button>
+                            </div>
+                            </td>
+                        </tr>
+              
+                     }
+
+          
+            </tbody>
+        </table>
+    </div>
+ 
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Delete Confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Do you really want delete this Product?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <form asp-controller="Business" asp-action="DeleteProduct" method="post">
+                        <button type="submit" class=" btn btn-primary"    >Yeas</button>
+                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-product');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const Id = this.dataset.id; // Access data-id attribute using dataset property
+
+                    // Update modal confirmation message (optional)
+                    // const modalBody = document.getElementById('exampleModalCenter').querySelector('.modal-body');
+                    // modalBody.textContent = `Are you sure you want to delete cashier with ID: ${cashierId}`;
+
+                    // Update the "Yes" button's action URL with the ID (replace "???"):
+                    const form = document.getElementById('exampleModalCenter').querySelector('.modal-footer form');
+                    var newValue = '/Business/DeleteProduct' + '/' + Id;
+
+ 
+                    form.setAttribute('action', newValue);
+                });
+            });
+        });
+    </script>
+}
+
+

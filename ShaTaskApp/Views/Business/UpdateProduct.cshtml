@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNetCore.Authentication;
+@using ShaTaskApp.Models.Business
+@model ShaTaskApp.Models.Entities.Product
+
+@{
+    ViewBag.Title = "Update Product";
+    var ProductCategories = Html.GetEnumSelectList<ProductCategories>();
+    var selectedOption = ProductCategories.ToList().SingleOrDefault(c => c.Text == Model.Category);
+    //selectedOption.Selected = true;
+    Model.Category = selectedOption.Value;
+    var x = 9;
+}
+
+
+<section class="ftco-section">
+    <div class="container bg-infdo w-50">
+
+        <div class="row justify-content-center ">
+            <div class="col-md-12 col-lg-10">
+
+                <div class="login-wrap p-4 p-md-5 ">
+                    <div class="d-flex ">
+                        <div class="w-100">
+                            <h3 class="mb-4">Upadte Product Details</h3>
+                        </div>
+
+                    </div>
+                    <form method="post" class="signin-form">
+
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Name">Name</label>
+                            <input type="text"  class="form-control" asp-for="Name" value="@Model.Name">
+                            <span class="validate-color" asp-validation-for="Name"></span>
+
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Description">Description</label>
+                            <input type="text"  class="form-control" asp-for="Description" value="@Model.Description">
+                            <span class="validate-color" asp-validation-for="Description"></span>
+
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Price">Price</label>
+                            <input type="text"  class="form-control" asp-for="Price" value="@Model.Price">
+                            <span class="validate-color" asp-validation-for="Price"></span>
+
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Category">Category</label>
+                            <select class="form-select" aria-label="Default select example"
+                                    asp-for="Category"
+                                    asp-items="ProductCategories">
+ 
+                            
+                            </select>                
+                            <span class="validate-color" asp-validation-for="Category"></span>
+                        </div>
+                        <div asp-validation-summary="All" class="validate-color"></div>
+
+                        <div class="form-group">
+                            <button type="submit" class="form-control btn btn-primary rounded submit px-3">Update</button>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+

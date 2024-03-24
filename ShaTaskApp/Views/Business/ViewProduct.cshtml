@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.Authentication;
+@model ShaTaskApp.Models.Entities.Product
+
+@{
+    ViewBag.Title = "View Product";
+}
+
+
+<section class="ftco-section">
+    <div class="container bg-infdo w-50">
+
+        <div class="row justify-content-center ">
+            <div class="col-md-12 col-lg-10">
+
+                <div class="login-wrap p-4 p-md-5 ">
+                    <div class="d-flex ">
+                        <div class="w-100">
+                            <h3 class="mb-4">Product Details</h3>
+                        </div>
+
+                    </div>
+                    <form method="post" class="signin-form">
+
+                  
+
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Name">Name</label>
+                            <input type="text" disabled class="form-control" asp-for="Name" value="@Model.Name">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Description">Description</label>
+                            <input type="text" disabled class="form-control" asp-for="Description" value="@Model.Description">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Price">Price</label>
+                            <input type="text" disabled class="form-control" asp-for="Price" value="@Model.Price">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Category"> Category</label>
+                            <input type="text" disabled class="form-control" asp-for="Category" value="@Model.Category">
+                        </div>
+
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+

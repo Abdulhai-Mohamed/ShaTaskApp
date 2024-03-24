@@ -1,0 +1,42 @@
+html {
+    font-size: 14px;
+}
+
+.validate-color {
+    color: red;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.table thead th {
+    vertical-align: top !important;
+}
+
+.disabled {
+    opacity: 0.5; /* Adjust the opacity value as needed */
+    pointer-events: none;
+    cursor: not-allowed; /* Change cursor to indicate non-interactivity */
+    background-color: #f8d7da;
+}
+
+.center {
+    width: 150px;
+    margin: 40px auto;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}

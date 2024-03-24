@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNetCore.Authentication;
+@model ShaTaskApp.Models.Account.LoginModel
+
+@{
+    ViewBag.Title = "User Login";
+}
+
+
+<section class="ftco-section">
+    <div class="container bg-infdo w-50">
+
+        <div class="row justify-content-center ">
+            <div class="col-md-12 col-lg-10">
+               
+                <div class="login-wrap p-4 p-md-5 ">
+                    <div class="d-flex ">
+                        <div class="w-100">
+                            <h3 class="mb-4">Sign In</h3>
+                        </div>
+
+                    </div>
+                    <form method="post"  class="signin-form">
+                        
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Email">Email</label>
+                            <input type="text" class="form-control" asp-for="Email" placeholder="Email" required>
+                            <span class="validate-color" asp-validation-for="Email"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" asp-for="Password">Password</label>
+                            <input type="password" class="form-control" asp-for="Password" placeholder="Password" required>
+                            <span class="validate-color" asp-validation-for="Password"></span>
+                        </div>
+                        <div asp-validation-summary="All" class="validate-color"></div>
+
+                        <div class="form-group">
+                            <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
+                        </div>
+                        <div class="form-group d-md-flex">
+                            <div class="w-50 text-left">
+                                <label class="checkbox-wrap checkbox-primary mb-0" asp-for="RememberMe">
+                                    Remember Me
+                                    <input type="checkbox" checked asp-for="RememberMe">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <p class="text-center">
+                        Not a member?<a    asp-controller="Account" asp-action="Register">Sign Up</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+     
+</section>
+
+    
+ 
